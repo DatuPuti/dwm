@@ -1,0 +1,28 @@
+#!/bin/bash
+cd $HOME
+
+if [[ -n "$1" ]]; then
+    desktopName="$1"
+    #printf "\nStarting desktop: ${desktopName}\n"
+
+    cd ~
+    rm -rf .xinitrc
+    touch .xinitrc
+
+    case "$desktopName" in
+        lxqt)
+            printf "\n*** Starting desktop dwm\n"
+            echo "exec startlxqt" >> .xinitrc
+            ;;
+        dwm)
+            printf "\n*** Starting desktop dwm\n"
+            #echo "dwmblocks &" > .xinitrc
+            echo "slstatus &" > .xinitrc
+            echo "exec dwm" >> .xinitrc
+            ;;
+    esac
+else
+    printf "\nNo desktop specified, starting with default desktop."
+fi
+
+startx

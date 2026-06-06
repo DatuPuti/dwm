@@ -1,0 +1,40 @@
+--- dwm.c
++++ dwm.c
+@@ -518,9 +553,16 @@ cleanup(void)
+ 	XUngrabKey(dpy, AnyKey, AnyModifier, root);
+ 	while (mons)
+ 		cleanupmon(mons);
+-	for (i = 0; i < CurLast; i++)
++
++	if (showsystray) {
++		XUnmapWindow(dpy, systray->win);
++		XDestroyWindow(dpy, systray->win);
++		free(systray);
++	}
++
++    for (i = 0; i < CurLast; i++)
+ 		drw_cur_free(drw, cursor[i]);
+-	for (i = 0; i < LENGTH(colors); i++)
++	for (i = 0; i < LENGTH(colors) + 1; i++)
+ 		free(scheme[i]);
+ 	free(scheme);
+ 	XDestroyWindow(dpy, wmcheckwin);
+@@ -1071,9 +1281,17 @@ getatomprop(Client *c, Atom prop)
+ 	unsigned char *p = NULL;
+ 	Atom da, atom = None;
+ 
+-	if (XGetWindowProperty(dpy, c->win, prop, 0L, sizeof atom, False, XA_ATOM,
++	/* FIXME getatomprop should return the number of items and a pointer to
++	 * the stored data instead of this workaround */
++	Atom req = XA_ATOM;
++	if (prop == xatom[XembedInfo])
++		req = xatom[XembedInfo];
++
++	if (XGetWindowProperty(dpy, c->win, prop, 0L, sizeof atom, False, req,
+ 		&da, &di, &dl, &dl, &p) == Success && p) {
+ 		atom = *(Atom *)p;
++		if (da == xatom[XembedInfo] && dl == 2)
++			atom = ((Atom *)p)[1];
+ 		XFree(p);
+ 	}
+ 	return atom;
