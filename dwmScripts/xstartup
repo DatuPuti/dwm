@@ -10,6 +10,10 @@ if [[ -n "$1" ]]; then
     touch .xinitrc
 
     case "$desktopName" in
+        kali)
+            printf "\n*** Starting default desktop kali\n"
+            echo "exec xfce4" >> .xinitrc
+            ;;
         lxqt)
             printf "\n*** Starting desktop dwm\n"
             echo "exec startlxqt" >> .xinitrc
