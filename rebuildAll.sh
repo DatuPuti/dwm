@@ -13,3 +13,6 @@ cd ../slstatus-1.1
 cd ../st-0.9.3
 ./rebuildMe.sh
 
+cd ..
+./cleanAll.sh
+
