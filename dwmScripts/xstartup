@@ -9,6 +9,15 @@ if [[ -n "$1" ]]; then
     rm -rf .xinitrc
     touch .xinitrc
 
+    # uncomment the following 2 xrandr if you are using dual monitors
+    # may be required if you want to extend your desktop otherwise 
+    # the second monitor might just be mirrored
+    # run the command below from a terminal to discover what the port names are
+    # command: xrandr
+    
+    # echo "xrandr --output HDMI-1 --primary --auto --output HDMI-3 --auto --right-of HDMI-1" > .xinitrc
+    # echo "xrandr --output HDMI-3 --auto --left-of HDMI-1" >> .xinitrc
+
     case "$desktopName" in
         kali)
             printf "\n*** Starting default desktop kali\n"
@@ -20,8 +29,8 @@ if [[ -n "$1" ]]; then
             ;;
         dwm)
             printf "\n*** Starting desktop dwm\n"
-            #echo "dwmblocks &" > .xinitrc
-            echo "slstatus &" > .xinitrc
+            #echo "dwmblocks &" >> .xinitrc
+            echo "slstatus &" >> .xinitrc
             echo "exec dwm" >> .xinitrc
             ;;
     esac
