@@ -1,6 +1,28 @@
 #!/usr/bin/zsh
 
-DELETE_BIN=false
+TRUE=1
+FALSE=0
+
+DELETE_BIN=${FALSE}
+
+case "$1" in
+    --help|-h)
+        echo "Usage: $0 [--with-bin]"
+        echo "  --with-bin   Also delete installed executable"
+        exit 0
+        ;;
+    --with-bin)
+        DELETE_BIN=TRUE
+        ;;
+    "")
+        # no args: normal cleanup including exe's
+        ;;
+        *)
+        echo "Unknown option: $1"
+        echo "Use --help for usage"
+        exit 1
+        ;;
+esac
 
 cd dmenu
 make clean
@@ -15,24 +37,9 @@ cd ../st-0.9.3
 make clean
 
 cd ..
-case "$1" in
-    --with-bin)
-        sudo rm -rf /usr/local/bin/st
-        sudo rm -rf /usr/local/bin/dwm
-        sudo rm -rf /usr/local/bin/dmenu
-        sudo rm -rf /usr/local/bin/slstatus
-        ;;
-    --help|-h)
-        echo "Usage: $0 [--with-bin]"
-        echo "  --with-bin   Also delete installed executable"
-        exit 0
-        ;;
-    "")
-        # no args: normal cleanup including exe's
-        ;;
-        *)
-        echo "Unknown option: $1"
-        echo "Use --help for usage"
-        exit 1
-        ;;
-esac
+if (( DELETE_BIN )); then
+    sudo rm -rf /usr/local/bin/st
+    sudo rm -rf /usr/local/bin/dwm
+    sudo rm -rf /usr/local/bin/dmenu
+    sudo rm -rf /usr/local/bin/slstatus
+fi

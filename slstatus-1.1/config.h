@@ -99,5 +99,5 @@ static const struct arg args[] = {
 	{ run_command, myBat,           "$HOME/bin/sl_batpercent.sh" },
 	{ disk_perc, myDisc,           "/" },
 	{ uptime, myUTime,           "" },
-    { datetime, myDateTime, "%Y-%m-%d %H:%M" },
+    { datetime, myDateTime, "%Y-%m-%d %I:%M%p" },
 };
