@@ -72,11 +72,13 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *vscode[]  = { "code", NULL };
 static const char *qutebrowser[]  = { "qutebrowser", NULL };
 static const char *firefox[]  = { "firefox-dev", NULL };
+static const char *postman[]  = { "Postman", NULL };
 
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = postman } },
 	{ MODKEY,                       XK_o,      spawn,          {.v = qutebrowser } },
 	{ MODKEY|ShiftMask,             XK_m, 	   spawn,          SHCMD("st -e neomutt") },
 	{ MODKEY|ShiftMask,             XK_n, 	   spawn,          SHCMD("st -e nvim") },
